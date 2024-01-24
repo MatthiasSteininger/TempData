@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ouc9gP6cipsRYRA7RXXkepXQFOylQ/j6KLKLJ20+nD7icdLjqO3Qnb47r2PI4PD8Gewt/IpKyCaEP19zTPLsQA==",
+  "dgSpecHash": "0QZr6Rg4PCp47EWtJi+JfvCUvzhajMddLxt3tJbwOLYCubup23neurKWQbc+IYSYiEle8Jw71S1kg/dEJgPouQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Matthias\\OneDrive\\Sektor1\\Papa - Arbeit\\Peindl\\Script1 - TestCon\\CSharpTesting\\SocketServer\\SocketServer.csproj",
+  "projectFilePath": "C:\\_GitHUB\\@LVR-P\\TempData\\CSharpTesting\\SocketServer\\SocketServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Matthias\\.nuget\\packages\\websocketsharp.standard\\1.0.3\\websocketsharp.standard.1.0.3.nupkg.sha512"
   ],

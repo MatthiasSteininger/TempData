@@ -44,22 +44,30 @@ namespace SocketClient
 
         private void btnCon_Click(object sender, RoutedEventArgs e)
         {
-            if (ws == null) {
-                setup();
+            try
+            {
+                if (ws == null)
+                {
+                    setup();
+                }
+
+                if (this.isOnMessageSetup == false)
+                {
+                    this.ws!.OnMessage += (sender, e) => {
+                        this.Dispatcher.BeginInvoke(new Action(() => {
+                            lbxRecMessages.Items.Add("Client received a message: " + e.Data);
+                        }));
+                    };
+                    this.isOnMessageSetup = true;
+                }
+
+                this.ws!.Connect();
+
+                lblMsg.Content = "Tried Connecting Client";
+            } catch (Exception ex)
+            {
+                MessageBox.Show("Exception thrown: \n MSG: " + ex.Message);
             }
-
-            if (this.isOnMessageSetup == false) {
-                this.ws!.OnMessage += (sender, e) => {
-                    this.Dispatcher.BeginInvoke(new Action(() => {
-                        lbxRecMessages.Items.Add("Client received a message: " + e.Data);
-                    }));
-                };
-                this.isOnMessageSetup = true;
-            }
-
-            this.ws!.Connect();
-
-            lblMsg.Content = "Tried Connecting Client";
         }
 
         private void btnDisCon_Click(object sender, RoutedEventArgs e)
