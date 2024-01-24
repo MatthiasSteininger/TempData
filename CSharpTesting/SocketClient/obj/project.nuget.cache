@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "rrpqRTgjQIyGR8S9YpzuZ9bvAlTfgqBJoU+Jcwq1FmmTpphQEwwToOnnyrBuCSA4im23SbVWbIQrYO4/FJRswg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Matthias\\OneDrive\\Sektor1\\Papa - Arbeit\\Peindl\\Script1 - TestCon\\CSharpTesting\\SocketClient\\SocketClient.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Matthias\\.nuget\\packages\\websocketsharp.standard\\1.0.3\\websocketsharp.standard.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
