@@ -21,3 +21,26 @@ C:\Users\Matthias\OneDrive\Sektor1\Papa - Arbeit\Peindl\Script1 - TestCon\CSharp
 C:\Users\Matthias\OneDrive\Sektor1\Papa - Arbeit\Peindl\Script1 - TestCon\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\ref\SocketServer.dll
 C:\Users\Matthias\OneDrive\Sektor1\Papa - Arbeit\Peindl\Script1 - TestCon\CSharpTesting\SocketServer\bin\Debug\net6.0-windows\websocket-sharp-standard.dll
 C:\Users\Matthias\OneDrive\Sektor1\Papa - Arbeit\Peindl\Script1 - TestCon\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.csproj.CopyComplete
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\bin\Debug\net6.0-windows\SocketServer.exe
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\bin\Debug\net6.0-windows\SocketServer.deps.json
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\bin\Debug\net6.0-windows\SocketServer.runtimeconfig.json
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\bin\Debug\net6.0-windows\SocketServer.dll
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\bin\Debug\net6.0-windows\SocketServer.pdb
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\bin\Debug\net6.0-windows\websocket-sharp-standard.dll
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.csproj.AssemblyReference.cache
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\App.g.cs
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer_MarkupCompile.cache
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer_MarkupCompile.lref
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\MainWindow.baml
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.g.resources
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.GeneratedMSBuildEditorConfig.editorconfig
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.AssemblyInfoInputs.cache
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.AssemblyInfo.cs
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.csproj.CoreCompileInputs.cache
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.csproj.CopyComplete
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.dll
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\refint\SocketServer.dll
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.pdb
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\SocketServer.genruntimeconfig.cache
+C:\_GitHUB\@LVR-P\TempData\CSharpTesting\SocketServer\obj\Debug\net6.0-windows\ref\SocketServer.dll

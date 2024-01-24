@@ -43,7 +43,7 @@ namespace SocketServer
 
         private void setup()
         {
-            var wssv = new WebSocketServer("ws://localhost:8080");
+            var wssv = new WebSocketServer("ws://192.168.101.83:8080");
             wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
             wssv.Start();
 

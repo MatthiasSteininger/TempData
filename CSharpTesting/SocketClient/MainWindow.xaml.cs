@@ -46,8 +46,14 @@ namespace SocketClient
         {
             try
             {
-                if (ws == null)
+                if (this.ws == null)
                 {
+                    setup();
+                } else
+                {
+                    this.ws!.Close();
+                    this.isOnMessageSetup = false; //dont need to remove old OnMessage Event since ws is new inited
+
                     setup();
                 }
 
@@ -77,14 +83,17 @@ namespace SocketClient
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ws! != null && this.ws!.IsAlive)
-            {
+            if (this.ws == null || !this.ws!.IsAlive) {
+                if (this.ws == null) {
+                    MessageBox.Show("Client is Null and Connection is not Alive!");
+                } else
+                {
+                    MessageBox.Show("Connection is not Alive!");
+                }
+            } else {
                 this.ws!.Send("Hello, Server!");
 
                 lblMsg.Content = "Sunt Message " + DateTime.Now.ToString();
-            } else
-            {
-                MessageBox.Show("Client is not Connected!");
             }
         }
     }
