@@ -40,34 +40,41 @@ namespace SocketServer
 
         private void buildSocket()
         {
-            string tbxContent = this.tbxSetupString.Text;
-            if (this.wssv == null)
+            try
             {
-                Task.Run(() => {
-                    this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
-                    this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
-                    this.wssv.Start();
+                string tbxContent = this.tbxSetupString.Text;
+                if (this.wssv == null)
+                {
+                    Task.Run(() => {
+                        this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
+                        this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
+                        this.wssv.Start();
 
-                    this.Dispatcher.BeginInvoke(new Action(() => {
-                        tbkMsg.Text = "WebSocket Setup with " + tbxContent;
-                        btnSetup.Content = "ReSetup";
-                    }));
-                });
-            } else
+                        this.Dispatcher.BeginInvoke(new Action(() => {
+                            tbkMsg.Text = "WebSocket Setup with " + tbxContent;
+                            btnSetup.Content = "ReSetup";
+                        }));
+                    });
+                }
+                else
+                {
+                    Task.Run(() => {
+                        this.wssv.RemoveWebSocketService("/WebSocketRoute");
+                        this.wssv.Stop();
+                        this.wssv = null;
+
+                        this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
+                        this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
+                        this.wssv.Start();
+
+                        this.Dispatcher.BeginInvoke(new Action(() => {
+                            tbkMsg.Text = "WebSocket Setup with " + tbxContent;
+                        }));
+                    });
+                }
+            } catch (Exception ex)
             {
-                Task.Run(() => {
-                    this.wssv.RemoveWebSocketService("/WebSocketRoute");
-                    this.wssv.Stop();
-                    this.wssv = null;
-
-                    this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
-                    this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
-                    this.wssv.Start();
-
-                    this.Dispatcher.BeginInvoke(new Action(() => {
-                        tbkMsg.Text = "WebSocket Setup with " + tbxContent;
-                    }));
-                });
+                MessageBox.Show("There has been an Exception while Setting up the Web Socket Server!\nExcMSG: " + ex.Message);
             }
         }
 
