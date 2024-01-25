@@ -43,15 +43,16 @@ namespace SocketServer
             try
             {
                 string tbxContent = this.tbxSetupString.Text;
+                string setupString = "ws://" + tbxContent + ":8080";
                 if (this.wssv == null)
                 {
                     Task.Run(() => {
-                        this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
+                        this.wssv = new WebSocketServer(setupString);
                         this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
                         this.wssv.Start();
 
                         this.Dispatcher.BeginInvoke(new Action(() => {
-                            tbkMsg.Text = "WebSocket Setup with " + tbxContent;
+                            tbkMsg.Text = "WebSocket Setup with '" + setupString + "'";
                             btnSetup.Content = "ReSetup";
                         }));
                     });
