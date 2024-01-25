@@ -80,7 +80,7 @@ namespace SocketServer
                 {
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        tbkMsg.Text = "TRIED WebSocket Setup with '" + setupString + "' - UNSUCCESSFULL";
+                        tbkMsg.Text = "TRIED WebSocket Setup with '" + setupString + "' - FAILED";
                     }));
                     MessageBox.Show("There has been an Exception while Setting up the Web Socket Server!\nExcMSG: " + ex.Message);
                 }
@@ -107,7 +107,7 @@ namespace SocketServer
 
         private void btnTestOtherClient_Click(object sender, RoutedEventArgs e)
         {
-            testSetup();
+            //testSetup();
         }
 
         private async void testSetup()

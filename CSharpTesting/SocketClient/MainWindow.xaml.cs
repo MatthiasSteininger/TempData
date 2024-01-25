@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +28,8 @@ namespace SocketClient
     public partial class MainWindow : Window
     {
         private WebSocket? ws { get; set; }
-        private bool isOnMessageSetup {  get; set; } = false;
+        private bool isOnMessageSetuped {  get; set; } = false;
+        private bool isCurrentlyTryingToConnect { get; set; } = false;
 
         public MainWindow()
         {
@@ -37,6 +39,8 @@ namespace SocketClient
 
         private void setup()
         {
+            this.isCurrentlyTryingToConnect = true;
+
             string tbxAddress_Content = "";
             this.Dispatcher.InvokeAsync(new Action(() => {
                 //Thread.Sleep(1000); //sends the MainThread to sleep since this action is executed on the main thread via the Invoke
@@ -60,6 +64,8 @@ namespace SocketClient
                 tcs_wsSetup.SetResult(true);
             }));
             tcs_wsSetup.Task.Wait();
+
+            this.isCurrentlyTryingToConnect = false;
         }
 
         private void btnCon_Click(object sender, RoutedEventArgs e)
@@ -74,19 +80,19 @@ namespace SocketClient
                     else
                     {
                         this.ws!.Close();
-                        this.isOnMessageSetup = false; //dont need to remove old OnMessage Event since ws is new inited
+                        this.isOnMessageSetuped = false; //dont need to remove old OnMessage Event since ws is new inited
 
                         setup();
                     }
 
-                    if (this.isOnMessageSetup == false)
+                    if (this.isOnMessageSetuped == false)
                     {
                         this.ws!.OnMessage += (sender, e) => {
                             this.Dispatcher.BeginInvoke(new Action(() => {
                                 lbxRecMessages.Items.Add("Client received a message: " + e.Data);
                             }));
                         };
-                        this.isOnMessageSetup = true;
+                        this.isOnMessageSetuped = true;
                     }
 
                     this.ws!.Connect();
@@ -110,24 +116,19 @@ namespace SocketClient
 
         private void btnDisCon_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ws == null)
-            {
-                MessageBox.Show("Client is not connected");
-            } else
+            if (this.ws != null && this.ws.IsAlive && !this.isCurrentlyTryingToConnect)
             {
                 this.ws!.Close();
+            } else
+            {
+                MessageBox.Show("Client is not connected or currently trying to");
             }
         }
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
             if (this.ws == null || !this.ws!.IsAlive) {
-                if (this.ws == null) {
-                    MessageBox.Show("Client is Null and Connection is not Alive!");
-                } else
-                {
-                    MessageBox.Show("Connection is not Alive!");
-                }
+                MessageBox.Show("Client is not connected or currently trying to");
             } else {
                 this.ws!.Send("Hello, Server!");
 
