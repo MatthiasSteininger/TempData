@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,49 +37,86 @@ namespace SocketClient
 
         private void setup()
         {
-            string conString = "ws://" + this.tbxAddress.Text.ToString() + ":8080/WebSocketRoute";
-            this.ws = new WebSocket(conString);
+            string tbxAddress_Content = "";
+            this.Dispatcher.InvokeAsync(new Action(() => {
+                //Thread.Sleep(1000); //sends the MainThread to sleep since this action is executed on the main thread via the Invoke
+                tbxAddress_Content = this.tbxAddress.Text.ToString();
+            })).Wait();
+            //waiting for the action to finish
 
-            lblMsg.Content = "WebSocket Setup Successfully";
+            string conString = "ws://" + tbxAddress_Content + ":8080/WebSocketRoute";
+            this.Dispatcher.BeginInvoke(() =>
+            {
+                this.lblMsg.Content = "TRYING: " + conString;
+            });
+
+            var ws = new WebSocket(conString);
+
+            //is another option to wait for the task to finish
+            TaskCompletionSource<bool> tcs_wsSetup = new TaskCompletionSource<bool>();
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                this.ws = ws;
+                tcs_wsSetup.SetResult(true);
+            }));
+            tcs_wsSetup.Task.Wait();
         }
 
         private void btnCon_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (this.ws == null)
+            Task.Run(() => {
+                try
                 {
-                    setup();
-                } else
-                {
-                    this.ws!.Close();
-                    this.isOnMessageSetup = false; //dont need to remove old OnMessage Event since ws is new inited
+                    if (this.ws == null)
+                    {
+                        setup();
+                    }
+                    else
+                    {
+                        this.ws!.Close();
+                        this.isOnMessageSetup = false; //dont need to remove old OnMessage Event since ws is new inited
 
-                    setup();
+                        setup();
+                    }
+
+                    if (this.isOnMessageSetup == false)
+                    {
+                        this.ws!.OnMessage += (sender, e) => {
+                            this.Dispatcher.BeginInvoke(new Action(() => {
+                                lbxRecMessages.Items.Add("Client received a message: " + e.Data);
+                            }));
+                        };
+                        this.isOnMessageSetup = true;
+                    }
+
+                    this.ws!.Connect();
+
+                    this.Dispatcher.BeginInvoke(new Action(() => {
+                        if (this.ws!.IsAlive)
+                        {
+                            lblMsg.Content = "Connection is alive";
+                        } else
+                        {
+                            lblMsg.Content = "Connecting Client failed";
+                        }
+                    }));
                 }
-
-                if (this.isOnMessageSetup == false)
+                catch (Exception ex)
                 {
-                    this.ws!.OnMessage += (sender, e) => {
-                        this.Dispatcher.BeginInvoke(new Action(() => {
-                            lbxRecMessages.Items.Add("Client received a message: " + e.Data);
-                        }));
-                    };
-                    this.isOnMessageSetup = true;
+                    MessageBox.Show("Exception thrown: \n MSG: " + ex.Message);
                 }
-
-                this.ws!.Connect();
-
-                lblMsg.Content = "Tried Connecting Client";
-            } catch (Exception ex)
-            {
-                MessageBox.Show("Exception thrown: \n MSG: " + ex.Message);
-            }
+            });
         }
 
         private void btnDisCon_Click(object sender, RoutedEventArgs e)
         {
-            this.ws!.Close();
+            if (this.ws == null)
+            {
+                MessageBox.Show("Client is not connected");
+            } else
+            {
+                this.ws!.Close();
+            }
         }
 
         private void btnSend_Click(object sender, RoutedEventArgs e)

@@ -16,19 +16,26 @@
 
         <Grid Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="9*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="15*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Content="Options" FontSize="26" FontWeight="Bold" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+            <Label Content="Options" FontSize="26" FontWeight="Bold" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
 
             <StackPanel Orientation="Vertical" Grid.Row="2">
                 <StackPanel Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnSetup" Content="Setup" Width="100" Height="30" HorizontalAlignment="Left" Click="btnSetup_Click"></Button>
+                        <Rectangle Width="10"></Rectangle>
+                        <TextBox x:Name="tbxSetupString" Text="localhost" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="200"></TextBox>
+                    </StackPanel>
+                    <Rectangle Height="10"></Rectangle>
                     <Button x:Name="btnSendToClients" Content="SendToClients" Width="100" Height="30" HorizontalAlignment="Left" Click="btnSendToClients_Click"></Button>
                     <Rectangle Height="10"></Rectangle>
-                    <Button x:Name="btnClick2" Content="Click 2" Width="100" Height="30" HorizontalAlignment="Left" Click="btnClick2_Click"></Button>
-                    <Rectangle Height="10"></Rectangle>
+                    <Separator></Separator>
                     <TextBlock x:Name="tbkMsg" TextWrapping="WrapWithOverflow" Text="Info Message" Height="100" FontSize="14"></TextBlock>
+                    <Rectangle Height="10"></Rectangle>
+                    <Separator></Separator>
                     <Label x:Name="lblConnectedClientsao" Content="Waiting For Connection..." FontSize="20"></Label>
                 </StackPanel>
             </StackPanel>
@@ -36,11 +43,11 @@
 
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="9*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="15*"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <Label Content="Clients Messages" FontSize="26" FontWeight="Bold" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+            <Label Content="Clients Messages" FontSize="26" FontWeight="Bold" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
             <ListBox x:Name="lbxMsgs" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>

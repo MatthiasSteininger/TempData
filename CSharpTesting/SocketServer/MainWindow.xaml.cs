@@ -30,49 +30,62 @@ namespace SocketServer
 
     public partial class MainWindow : Window
     {
+        public WebSocketServer? wssv { get; set; } = null;
+
         public MainWindow()
         {
             GlobalUI.main = this;
             InitializeComponent();
-
-            //runs setup async
-            Task.Run(() => {
-                setup();
-            });
         }
 
-        private void setup()
+        private void buildSocket()
         {
-            var wssv = new WebSocketServer("ws://192.168.101.83:8080");
-            wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
-            wssv.Start();
+            string tbxContent = this.tbxSetupString.Text;
+            if (this.wssv == null)
+            {
+                Task.Run(() => {
+                    this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
+                    this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
+                    this.wssv.Start();
 
-            this.Dispatcher.BeginInvoke(new Action(() => {
-                tbkMsg.Text = "WebSocket Server Started Successfully";
-            }));
+                    this.Dispatcher.BeginInvoke(new Action(() => {
+                        tbkMsg.Text = "WebSocket Setup with " + tbxContent;
+                        btnSetup.Content = "ReSetup";
+                    }));
+                });
+            } else
+            {
+                Task.Run(() => {
+                    this.wssv.RemoveWebSocketService("/WebSocketRoute");
+                    this.wssv.Stop();
+                    this.wssv = null;
 
-            // Example: Send a message to clients after 5 seconds
-            //System.Threading.Thread.Sleep(5000);
+                    this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
+                    this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
+                    this.wssv.Start();
 
-            //MyWebSocketBehavior.SendMessageToClients("Hello, clients!");
-
-            //Dispatcher.BeginInvoke(new Action(() => {
-            //    tbkOtherContent.Text = "WebSocket Server Stopped...";
-            //}));
-
-            //wssv.Stop();
+                    this.Dispatcher.BeginInvoke(new Action(() => {
+                        tbkMsg.Text = "WebSocket Setup with " + tbxContent;
+                    }));
+                });
+            }
         }
 
-        //Buttons
         private void btnSendToClients_Click(object sender, RoutedEventArgs e)
         {
-            MyWebSocketBehavior.SendMessageToClients("Hello, clients!");
-            //setup();
+            //static method should not break
+            if (this.wssv != null)
+            {
+                MyWebSocketBehavior.SendMessageToClients("Hello, clients!");
+            } else
+            {
+                MessageBox.Show("The Socket Server is not running!");
+            }
         }
 
-        private void btnClick2_Click(object sender, RoutedEventArgs e)
+        private void btnSetup_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Other Things!");
+            buildSocket();
         }
     }
 }
