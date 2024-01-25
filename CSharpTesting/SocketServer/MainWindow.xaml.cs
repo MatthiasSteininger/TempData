@@ -40,26 +40,24 @@ namespace SocketServer
 
         private void buildSocket()
         {
-            try
-            {
-                string tbxContent = this.tbxSetupString.Text;
-                string setupString = "ws://" + tbxContent + ":8080";
-                if (this.wssv == null)
+            this.tbkMsg.Text = "Setting UP...";
+            string tbxContent = this.tbxSetupString.Text;
+            string setupString = "ws://" + tbxContent + ":8080";
+            Task.Run(() => {
+                try
                 {
-                    Task.Run(() => {
+                    if (this.wssv == null)
+                    {
                         this.wssv = new WebSocketServer(setupString);
                         this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
                         this.wssv.Start();
 
                         this.Dispatcher.BeginInvoke(new Action(() => {
-                            tbkMsg.Text = "WebSocket Setup with '" + setupString + "'";
                             btnSetup.Content = "ReSetup";
                         }));
-                    });
-                }
-                else
-                {
-                    Task.Run(() => {
+                    }
+                    else
+                    {
                         this.wssv.RemoveWebSocketService("/WebSocketRoute");
                         this.wssv.Stop();
                         this.wssv = null;
@@ -67,16 +65,20 @@ namespace SocketServer
                         this.wssv = new WebSocketServer("ws://" + tbxContent + ":8080");
                         this.wssv.AddWebSocketService<MyWebSocketBehavior>("/WebSocketRoute");
                         this.wssv.Start();
+                    }
 
-                        this.Dispatcher.BeginInvoke(new Action(() => {
-                            tbkMsg.Text = "WebSocket Setup with " + tbxContent;
-                        }));
-                    });
+                    this.Dispatcher.BeginInvoke(new Action(() => {
+                        tbkMsg.Text = "WebSocket Setup with '" + setupString + "' - SUCCESSFULL";
+                    }));
                 }
-            } catch (Exception ex)
-            {
-                MessageBox.Show("There has been an Exception while Setting up the Web Socket Server!\nExcMSG: " + ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.BeginInvoke(new Action(() => {
+                        tbkMsg.Text = "TRIED WebSocket Setup with '" + setupString + "' - UNSUCCESSFULL";
+                    }));
+                    MessageBox.Show("There has been an Exception while Setting up the Web Socket Server!\nExcMSG: " + ex.Message);
+                }
+            }); 
         }
 
         private void btnSendToClients_Click(object sender, RoutedEventArgs e)
